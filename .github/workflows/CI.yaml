@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  cargo_build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        include:
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
+          - os: macos-latest
+            target: x86_64-apple-darwin
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: nightly
+          target: ${{ matrix.target }}
+          override: true
+
+      - name: Run tests
+        run: cargo test
+
+      - name: Build application
+        run: cargo build --release --target ${{ matrix.target }}
+
+      - name: Save artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: neuronek-cli-${{ matrix.target }}
+          path: |
+            target/${{ matrix.target }}/release/neuronek-cli
+            target/${{ matrix.target }}/release/neuronek-cli.exe
+
+  earthly_build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: earthly/actions-setup@v1
+        with:
+          version: v0.8.0
+      - uses: actions/checkout@v2
+      - name: Run build
+        run: earthly --ci --push +build

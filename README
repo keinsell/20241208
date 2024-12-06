@@ -1,0 +1,5 @@
+Repository was created to separate experimentation from neuronek project of mine and persist the "working" configuration of cross-compilation for other projects of mine that may involve similar process.
+
+Earthly was used to orchestrate the process, it's fundamentally a same as make, bash script or dockerfile, you can read the file to see how it works.
+
+Repository was archived on day of publication, and will not be mantained or updated anymore, there are built binaries available in Github Actions pipelines, if you would have questions about the process which you cannot resolve I may be able to help you (however if you do not even tried to solve it yourself you can fuckoff rn).

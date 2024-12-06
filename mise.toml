@@ -1,0 +1,3 @@
+[tools]
+earthly = "latest"
+rust = "nightly"

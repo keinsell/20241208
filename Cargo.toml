@@ -1,0 +1,8 @@
+[package]
+name = "neuronek-cli"
+version = "0.1.0"
+edition = "2021"
+repository = "https://github.com/neuronek/neuronek-cli"
+authors = ["Jakub Olan <keinsell@protonmail.com>"]
+
+[dependencies]
